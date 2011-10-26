@@ -1,0 +1,31 @@
+#!/usr/bin/ruby
+require 'rubygems'
+require 'smart_colored/extend'
+require 'rake'
+require File.expand_path("#{File.dirname(__FILE__)}/../lib/script/dev")
+
+def run(cmd, argv, args =[])
+    p "#{cmd} | #{args.join(' ')} | #{argv.join(' ')} | "
+end
+
+cmd = File.basename(__FILE__).to_sym
+case cmd
+when :pscala
+    exec Dev.scala("scala.tools.nsc.MainGenericRunner", ARGV)
+when :pscalac
+    exec Dev.scala("scala.tools.nsc.Main", ARGV)
+when :pfsc
+    exec Dev.scala("scala.tools.nsc.Compileclient", ARGV)
+when :pscalap
+    exec Dev.scala("scala.tools.scalap.Main", ARGV)
+when :pjava
+    exec Dev.java("", ARGV)
+when :pjavac
+    exec Dev.javac(ARGV)
+when :classpath
+    print "#{Dev.SCALA_CLASSPATH}:#{Dev.CLASSPATH}"
+when :spec
+    exec Dev.java("org.scalatest.tools.Runner", ["-p .", "-o", "-s", `classify #{ARGV.pop}`])
+else
+    raise "\"#{cmd}\" is unknown".red
+end

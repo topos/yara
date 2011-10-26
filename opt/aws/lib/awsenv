@@ -1,0 +1,32 @@
+SOURCED_BY_SCRIPT=1
+
+if [ "bash" = "$0" ]; then
+    MYDIR=$(dirname $BASH_SOURCE)
+    SOURCED_BY_SCRIPT=0
+elif [ "ksh" = "$0" ]; then
+    MYDIR=$(dirname ${.sh.file})
+    SOURCED_BY_SCRIPT=0
+elif [ "zsh" = "$0" ]; then
+    MYDIR=$(dirname $0)
+    SOURCED_BY_SCRIPT=0
+else
+    MYDIR=$(dirname $0)
+fi
+
+export AWS_HOME=$(cd $MYDIR/.. && pwd)
+export EC2_HOME=$AWS_HOME/opt/ec2
+export S3_HOME=$AWS_HOME/opt/s3
+
+export EC2_PRIVATE_KEY=$AWS_HOME/etc/credentials/pk-KBA6I7HFKSR5IS2ESQKVFNJYCFWVA2PQ.pem
+export EC2_CERT=$AWS_HOME/etc/credentials/cert-KBA6I7HFKSR5IS2ESQKVFNJYCFWVA2PQ.pem
+
+export AWS_ACCESS_KEY_ID=AKIAIISKFGETLOZTVOBQ
+export AWS_SECRET_ACCESS_KEY=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
+
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+
+if [ $SOURCED_BY_SCRIPT -eq 1 ]; then
+   export SSH_KEY=$AWS_HOME/etc/credentials/id_law360-dev-keypair
+fi
+
+export PATH=$EC2_HOME/bin:$S3_HOME:$AWS_HOME/bin:$PATH

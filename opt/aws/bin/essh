@@ -1,0 +1,17 @@
+#!/bin/ksh -p
+
+. $(dirname ${.sh.file})/../lib/awsenv
+
+OPTS="-q -l ubuntu -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $SSH_KEY"
+case $(basename $0) in
+    essh)
+	if [ -n "$1" ]; then
+	    exec ssh $OPTS $*
+	fi
+	;;
+    escp)
+	if [ -n "$1" ]; then
+	    exec scp $OPTS $*
+	fi
+	;;
+esac

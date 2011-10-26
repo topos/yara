@@ -1,0 +1,57 @@
+require File.expand_path("#{File.dirname(__FILE__)}/../lib/script/dev.rb")
+
+CLASS_DIR = '../lib/classes'
+
+JAR = "#{PROJ_NAME}.jar"
+
+BUILDR = 'buildr --buildfile .buildfile'
+
+desc "compile code and nothing more"
+task :cc do
+    sh "#{BUILDR} -v JAVA_HOME=#{Dev.JAVA_HOME} SCALA_HOME=#{Dev.SCALA_HOME} TOMCAT_HOME=#{Dev.TOMCAT_HOME}"
+end
+
+desc "compile code continuously and make dev configs"
+task :ccc => :config do
+    sh "#{BUILDR} -s cc JAVA_HOME=#{Dev.JAVA_HOME} SCALA_HOME=#{Dev.SCALA_HOME} TOMCAT_HOME=#{Dev.TOMCAT_HOME}"
+end
+
+desc "build jar"
+task :jar => :config do
+    Rake::Task[:clean].invoke
+    sh "#{BUILDR} -e production"
+    sh "mkdir -p dist"
+    sh "cd #{CLASS_DIR} && jar cf ../dist/#{JAR} *"
+end
+
+desc "build config"
+task :config do
+    ["#{Dev.HOME}/etc", "#{Dev.HOME}/opt/tomcat/conf"].each do |dir|
+        sh "cd #{dir} && rake dev"
+    end
+end
+
+desc "clean up"
+task :clean do; sh "cd #{CLASS_DIR} && rm -rf *"; end
+
+SPEC_RUNNER = 'org.scalatest.tools.Runner'
+desc "run [CLASS]"
+task :run, :class do |t, args|
+    raise "args[:class] is undefined" if args[:class].nil?
+    c = args[:class]
+    if c.match('.*Spec$')
+        sh "pscala #{SPEC_RUNNER} -p #{Dev.HOME}/lib/classes -o -s $(classify #{args[:class]})"
+    else
+        sh "pscala $(classify #{args[:class]})"
+    end
+end
+
+desc "run all spec tests"
+task :test do; sh "pscala org.scalatest.tools.Runner -o -p #{Dev.HOME}/lib/classes"; end
+
+desc "print env variables"
+task :info do
+    ["Dev.HOME=[#{Dev.HOME}]", "JAVA_HOME=[#{JAVA_HOME}]", "SCALA_HOME=[#{SCALA_HOME}]", "TOMCAT_HOME=[#{TOMCAT_HOME}]"].each { |e| puts e }
+end
+
+task :default do; sh "rake --silent -T"; end

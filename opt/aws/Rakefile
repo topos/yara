@@ -1,0 +1,18 @@
+require File.expand_path("#{File.dirname(__FILE__)}/lib/aws")
+Dir.glob('lib/task/*.rake').each { |r| import r }
+
+QA = 'ec2-50-16-134-114.compute-1.amazonaws.com'
+PROD = 'ec2-50-17-175-238.compute-1.amazonaws.com'
+
+task :default do; sh "rake -T"; end
+
+desc "QA: ssh"
+task :sshqa, :cmd do |t, args|
+    task('ec2:ssh').invoke(QA, args[:cmd])
+end
+
+desc "PROD: ssh"
+task :sshprod, :cmd do |t, args|
+    task('ec2:ssh').invoke(PROD, args[:cmd])
+end
+
