@@ -18,6 +18,9 @@ namespace :tomcat do
     desc "tail tomcat's log file"
     task :log do; sh "tail -100f opt/tomcat/logs/catalina.out"; end
 
+    desc "version"
+    task :info do; Dev.puts_color(`opt/tomcat/bin/version.sh`.each_line.map{|l| l.strip}); end
+
     def tomcat_pid
         `ps -eaf|grep java|egrep '\.Bootstrap[ ]+start$'|grep -v grep`.split[1]
     end

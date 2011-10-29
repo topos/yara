@@ -7,15 +7,13 @@ task :default do; sh "rake -T"; end
 
 desc "info scala and java versions"
 task :info do
+    lines = []
     ["#{Dev.SCALA_HOME}/bin/scala -version||exit 0", "#{Dev.JAVA_HOME}/bin/java -version 2>&1"].each do |c|
         `#{c}`.each_line.map{|l| l.strip}.each do |l|
-            puts case l 
-            when /^Scala code.*/; l.green
-            when /java version.*/; l.red
-            else; l
-            end
+            lines << l
         end
     end
+    Dev.puts_color(lines)
 end
 
 desc "make a distribution for QA"

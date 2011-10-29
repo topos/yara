@@ -88,6 +88,15 @@ module Dev
         c << "-Djava.net.preferIPv4Stack=true"
         c
     end
+    
+    def Dev.puts_color(lines)
+        lines.each_with_index do |l, i|
+            puts case i%2
+                 when 0; l.green
+                 when 1; l.blue
+                 end
+        end
+    end
 end
 
 JAVA_HOME = Dev.JAVA_HOME
