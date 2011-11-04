@@ -1,8 +1,8 @@
 require File.expand_path("#{File.dirname(__FILE__)}/lib/aws")
 Dir.glob('lib/task/*.rake').each { |r| import r }
 
-QA = 'ec2-50-16-134-114.compute-1.amazonaws.com'
-PROD = 'ec2-50-17-175-238.compute-1.amazonaws.com'
+QA = '[REPLACE].compute-1.amazonaws.com'
+PROD = '[REPLACE].compute-1.amazonaws.com'
 
 task :default do; sh "rake -T"; end
 
