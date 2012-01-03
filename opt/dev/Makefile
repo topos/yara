@@ -3,12 +3,12 @@
 # bootstrap to get ruby and gem
 help:; @echo "make dev: install packages needed for development on ubuntu 11.10"
 
-dev: apt_update apt_install apt_clean gemrc gems buildr sun_java6
+dev: apt_update apt_install apt_clean sun_java6 gemrc gems buildr
 
 apt_update:; @sudo apt-get update
 
-PKGS=build-essentials ksh m4 libprotoc6 ruby1.9.2-full xxdiff git
-apt_install:; @for i in ${PKGS}; do sudo apt-get install -y $$i; done
+PKGS=build-essential ksh m4 libprotoc6 libcurl3 ruby1.9.2-full xxdiff git
+apt_install:; @for i in ${PKGS}; do sudo apt-get install -f -y $$i; done
 
 apt_clean:
 	@sudo apt-get autoremove
