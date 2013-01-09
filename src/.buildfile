@@ -1,5 +1,5 @@
 require "buildr/scala"
-require "buildr/java"
+#require "buildr/java"
 
 repositories.remote << "http://repo1.maven.org/maven2"
 repositories.remote << "http://scala-tools.org/repo-releases/"

@@ -1,7 +1,7 @@
 .\" ##########################################################################
 .\" #                      __                                                #
 .\" #      ________ ___   / /  ___     Scala 2 On-line Manual Pages          #
-.\" #     / __/ __// _ | / /  / _ |    (c) 2002-2011, LAMP/EPFL              #
+.\" #     / __/ __// _ | / /  / _ |    (c) 2002-2013, LAMP/EPFL              #
 .\" #   __\ \/ /__/ __ |/ /__/ __ |                                          #
 .\" #  /____/\___/_/ |_/____/_/ | |    http://scala-lang.org/                #
 .\" #                           |/                                           #
@@ -9,7 +9,7 @@
 .\"
 .\" Process this file with nroff -man scala.1
 .\"
-.TH fsc 1  "January 18, 2007" "version 0.4" "USER COMMANDS"
+.TH fsc 1  "March 2012" "version 0.5" "USER COMMANDS"
 .\"
 .\" ############################## NAME ###############################
 .\"
@@ -50,8 +50,8 @@ Shut down the compilation daemon.  The daemon attempts to restart itself as nece
 \fB\-server\fR <\fIhostname:portnumber\fR> 
 Specify compile server host at port number.  Usually this option is not needed.  Note that the hostname must be for a host that shares the same filesystem.
 .TP
-\fB\-J\fR <\fIflag\fR> 
-Pass <flag> directly to the Java VM for the compilation daemon.
+\fB\-J\fR<\fIflag\fR> 
+Pass <\fIflag\fR> directly to the Java VM for the compilation daemon.
 .\"
 .\" ############################## DESCRIPTION ###############################
 .\"
@@ -136,7 +136,7 @@ Written by Martin Odersky and other members of the Scala team.
 .\"
 .SH "REPORTING BUGS"
 .PP
-Report bugs to http://lampsvn.epfl.ch/trac/scala.
+Report bugs to https://issues.scala-lang.org/.
 .\"
 .\" ############################## COPYRIGHT ###############################
 .\"
@@ -148,4 +148,4 @@ This is open-source software, available to you under a BSD-like license. See acc
 .\"
 .SH "SEE ALSO"
 .PP
-\fBsbaz\fR(1), \fBscala\fR(1), \fBscalac\fR(1), \fBscaladoc\fR(1), \fBscalap\fR(1)
+\fBscala\fR(1), \fBscalac\fR(1), \fBscaladoc\fR(1), \fBscalap\fR(1)

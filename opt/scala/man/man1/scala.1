@@ -1,7 +1,7 @@
 .\" ##########################################################################
 .\" #                      __                                                #
 .\" #      ________ ___   / /  ___     Scala 2 On-line Manual Pages          #
-.\" #     / __/ __// _ | / /  / _ |    (c) 2002-2011, LAMP/EPFL              #
+.\" #     / __/ __// _ | / /  / _ |    (c) 2002-2013, LAMP/EPFL              #
 .\" #   __\ \/ /__/ __ |/ /__/ __ |                                          #
 .\" #  /____/\___/_/ |_/____/_/ | |    http://scala-lang.org/                #
 .\" #                           |/                                           #
@@ -9,7 +9,7 @@
 .\"
 .\" Process this file with nroff -man scala.1
 .\"
-.TH scala 1  "April 18, 2007" "version 0.5" "USER COMMANDS"
+.TH scala 1  "April 2007" "version 0.5" "USER COMMANDS"
 .\"
 .\" ############################## NAME ###############################
 .\"
@@ -31,22 +31,22 @@
 <\fIcompiler-option\fR>
 Any scalac option.  See \fBscalac\fR(1).
 .TP
--howtorun:<\fIhow\fR>
+\fB\-howtorun:\fR<\fIhow\fR> 
 How to execute <\fItorun\fR>, if it is present. Options for <\fIhow\fR> are guess (the default), script, and object.
 .TP
--i
+\fB\-i\fR 
 Requests that a file be pre-loaded.  It is only meaningful for interactive shells.
 .TP
--e
+\fB\-e\fR 
 Requests that its argument be executed as Scala code.
 .TP
--savecompiled
+\fB\-savecompiled\fR 
 Save this compiled version of scripts in order to speed up later executions of the same script.  When running a script, save the compiled version of in a file with the same name as the script but with an extension of .jar.  On subsequent runs of the same script, the pre-compiled .jar file will be used if it is newer than the script file.
 .TP
--nocompdaemon
+\fB\-nocompdaemon\fR 
 Do not use the \fBfsc\fR offline compiler.
 .TP
--D<\fIproperty=value\fR>
+\fB\-D\fRproperty=value 
 Set a Java system property.  If no value is specified, then the property is set to the empty string.
 .TP
 <\fItorun\fR>
@@ -178,7 +178,7 @@ Written by Martin Odersky and other members of the Scala team.
 .\"
 .SH "REPORTING BUGS"
 .PP
-Report bugs to http://lampsvn.epfl.ch/trac/scala.
+Report bugs to https://issues.scala-lang.org/.
 .\"
 .\" ############################## COPYRIGHT ###############################
 .\"
@@ -190,4 +190,4 @@ This is open-source software, available to you under a BSD-like license. See acc
 .\"
 .SH "SEE ALSO"
 .PP
-\fBfsc\fR(1), \fBsbaz\fR(1), \fBscalac\fR(1), \fBscaladoc\fR(1), \fBscalap\fR(1)
+\fBfsc\fR(1), \fBscalac\fR(1), \fBscaladoc\fR(1), \fBscalap\fR(1)

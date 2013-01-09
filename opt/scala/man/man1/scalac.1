@@ -1,7 +1,7 @@
 .\" ##########################################################################
 .\" #                      __                                                #
 .\" #      ________ ___   / /  ___     Scala 2 On-line Manual Pages          #
-.\" #     / __/ __// _ | / /  / _ |    (c) 2002-2011, LAMP/EPFL              #
+.\" #     / __/ __// _ | / /  / _ |    (c) 2002-2013, LAMP/EPFL              #
 .\" #   __\ \/ /__/ __ |/ /__/ __ |                                          #
 .\" #  /____/\___/_/ |_/____/_/ | |    http://scala-lang.org/                #
 .\" #                           |/                                           #
@@ -9,7 +9,7 @@
 .\"
 .\" Process this file with nroff -man scala.1
 .\"
-.TH scalac 1  "April 18, 2007" "version 0.4" "USER COMMANDS"
+.TH scalac 1  "March 2012" "version 1.0" "USER COMMANDS"
 .\"
 .\" ############################## NAME ###############################
 .\"
@@ -34,6 +34,14 @@ Command line options. See \fBOPTIONS\fR below.
 <\fIsource files\fR>
 One or more source files to be compiled (such as MyClass.scala).
 .\"
+.\" ############################## DESCRIPTION ###############################
+.\"
+.SH DESCRIPTION
+.PP
+The \fBscalac\fR tool reads class and object definitions, written in the Scala programming language, and compiles them into bytecode class files.
+.PP
+By default, the compiler puts each class file in the same directory as its source file. You can specify a separate destination directory with -d (see \fBOPTIONS\fR, below).
+.\"
 .\" ############################## OPTIONS ###############################
 .\"
 .SH OPTIONS
@@ -45,40 +53,20 @@ The compiler has a set of standard options that are supported on the current dev
 .SS "Standard Options"
 .PP
 .TP
-\fB\-g:{none,source,line,vars,notc}\fR 
-"none" generates no debugging info,
-.IP
-"source" generates only the source file attribute,
-.IP
-"line" generates source and line number information,
-.IP
-"vars" generates source, line number and local variable information,
-.IP
-"notc" generates all of the above and \fIwill not\fR perform tail call optimization.
-.IP
-
+\fB\-D\fRproperty=value 
+Pass \fB\-D\fRproperty=value  directly to the runtime system.
 .TP
-\fB\-nowarn\fR 
-Generate no warnings
+\fB\-J\fR<\fIflag\fR> 
+Pass <\fIflag\fR> directly to the runtime system.
 .TP
-\fB\-verbose\fR 
-Output messages about what the compiler is doing
+\fB\-P:\fR<\fIplugin:opt\fR> 
+Pass an option to a plugin
 .TP
-\fB\-deprecation\fR 
-Indicate whether source should be compiled with deprecation information; defaults to off (accepted values are: on, off, yes and no)
-.IP
-Available since Scala version 2.2.1
-.IP
-
+\fB\-X\fR 
+Print a synopsis of advanced options.
 .TP
-\fB\-unchecked\fR 
-Enable detailed unchecked warnings
-.IP
-Non variable type-arguments in type patterns are unchecked since they are eliminated by erasure
-.IP
-Available since Scala version 2.3.0
-.IP
-
+\fB\-bootclasspath\fR <\fIpath\fR> 
+Override location of bootstrap class files (where to find the standard built-in classes, such as "scala.List").
 .TP
 \fB\-classpath\fR <\fIpath\fR> 
 Specify where to find user class files (on Unix-based systems a colon-separated list of paths, on Windows-based systems, a semicolon-separate list of paths). This does not override the built-in ("boot") search path.
@@ -87,17 +75,15 @@ The default class path is the current directory. Setting the CLASSPATH variable 
 .IP
 
 .TP
-\fB\-sourcepath\fR <\fIpath\fR> 
-Specify where to find input source files.
-.TP
-\fB\-bootclasspath\fR <\fIpath\fR> 
-Override location of bootstrap class files (where to find the standard built-in classes, such as "scala.List").
-.TP
-\fB\-extdirs\fR <\fIdirs\fR> 
-Override location of installed extensions.
-.TP
-\fB\-d\fR <\fIdirectory\fR> 
+\fB\-d\fR <\fIdirectory|jar\fR> 
 Specify where to place generated class files.
+.TP
+\fB\-deprecation\fR 
+Emit warning and location for usages of deprecated APIs.
+.IP
+Available since Scala version 2.2.1
+.IP
+
 .TP
 \fB\-encoding\fR <\fIencoding\fR> 
 Specify character encoding used by source files.
@@ -108,77 +94,165 @@ The default value is platform-specific (Linux: "UTF8", Windows: "Cp1252"). Execu
 .IP
 
 .TP
-\fB\-target:\fR <\fItarget\fR> 
+\fB\-explaintypes\fR 
+Explain type errors in more detail.
+.TP
+\fB\-extdirs\fR <\fIdirs\fR> 
+Override location of installed extensions.
+.TP
+\fB\-g:\fR{none,source,line,vars,notailcalls} 
+"none" generates no debugging info,
+.IP
+"source" generates only the source file attribute,
+.IP
+"line" generates source and line number information,
+.IP
+"vars" generates source, line number and local variable information,
+.IP
+"notailcalls" generates all of the above and \fIwill not\fR perform tail call optimization.
+.IP
+
+.TP
+\fB\-help\fR 
+Print a synopsis of standard options.
+.TP
+\fB\-javabootclasspath\fR <\fIpath\fR> 
+Override Java boot classpath.
+.TP
+\fB\-javaextdirs\fR <\fIpath\fR> 
+Override Java extdirs classpath.
+.TP
+\fB\-no-specialization\fR 
+Ignore \fI@specialize\fR annotations.
+.TP
+\fB\-nobootcp\fR 
+Do not use the boot classpath for the Scala jar files.
+.TP
+\fB\-nowarn\fR 
+Generate no warnings
+.TP
+\fB\-optimise\fR 
+Generates faster bytecode by applying optimisations to the program.
+.TP
+\fB\-print\fR 
+Print program with all Scala-specific features removed.
+.TP
+\fB\-sourcepath\fR <\fIpath\fR> 
+Specify location(s) of source files.
+.TP
+\fB\-target:\fR<\fItarget\fR> 
 Specify which backend to use (jvm-1.5,msil).
 .IP
 The default value is "jvm-1.5" (was "jvm-1.4" up to Scala version 2.6.1).
 .IP
 
 .TP
-\fB\-print\fR 
-Print program with all Scala-specific features removed
+\fB\-toolcp\fR <\fIpath\fR> 
+Add to the runner classpath.
 .TP
-\fB\-optimise\fR 
-Generates faster bytecode by applying optimisations to the program
-.TP
-\fB\-explaintypes\fR 
-Explain type errors in more detail.
+\fB\-unchecked\fR 
+Enable detailed unchecked (erasure) warnings
+.IP
+Non variable type-arguments in type patterns are unchecked since they are eliminated by erasure
+.IP
+Available since Scala version 2.3.0
+.IP
+
 .TP
 \fB\-uniqid\fR 
-Print identifiers with unique names (debugging option).
+Uniquely tag all identifiers in debugging output.
+.TP
+\fB\-verbose\fR 
+Output messages about what the compiler is doing
 .TP
 \fB\-version\fR 
 Print product version and exit.
 .TP
-\fB\-help\fR 
-Print a synopsis of standard options.
+\fB@\fR<\fIfile\fR>
+A text file containing compiler arguments (options and source files)
 .\"
 .\" ############################## Advanced Options ###############################
 .\"
 .SS "Advanced Options"
 .PP
 .TP
-\fB\-Xassem\fR <\fIfile\fR> 
-Name of the output assembly (only relevant with -target:msil)
+\fB\-Xassem-extdirs\fR <\fIdirs\fR> 
+(Requires -target:msil) List of directories containing assemblies.  default:lib.
+.TP
+\fB\-Xassem-name\fR <\fIfile\fR> 
+(Requires -target:msil) Name of the output assembly.
 .TP
 \fB\-Xassem-path\fR <\fIpath\fR> 
-List of assemblies referenced by the program (only relevant with -target:msil)
+(Requires -target:msil) List of assemblies referenced by the program.
 .TP
 \fB\-Xcheck-null\fR 
-Emit warning on selection of nullable reference
+Warn upon selection of nullable reference
+.TP
+\fB\-Xcheckinit\fR 
+Wrap field accessors to throw an exception on uninitialized access.
 .TP
 \fB\-Xdisable-assertions\fR 
 Generate no assertions and assumptions
 .TP
+\fB\-Xelide-below\fR <\fIn\fR> 
+Calls to \fI@elidable\fR methods are omitted if method priority is lower than argument.
+.TP
 \fB\-Xexperimental\fR 
-enable experimental extensions
+Enable experimental extensions
+.TP
+\fB\-Xfatal-warnings\fR 
+Fail the compilation if there are any warnings.
+.TP
+\fB\-Xfuture\fR 
+Turn on future language features.
+.TP
+\fB\-Xgenerate-phase-graph\fR <\fIfile\fR> 
+Generate the phase graphs (outputs .dot files) to fileX.dot.
+.TP
+\fB\-Xlint\fR 
+Enable recommended additional warnings.
+.TP
+\fB\-Xlog-implicits\fR 
+Show more detail on why some implicits are not applicable.
+.TP
+\fB\-Xmax-classfile-name\fR <\fIn\fR> 
+Maximum filename length for generated classes.
+.TP
+\fB\-Xmigration\fR 
+Warn about constructs whose behavior may have changed between 2.7 and 2.8.
+.TP
+\fB\-Xno-forwarders\fR 
+Do not generate static forwarders in mirror classes.
 .TP
 \fB\-Xno-uescape\fR 
 Disable handling of \eu unicode escapes
 .TP
-\fB\-Xplug-types\fR 
-Parse but ignore annotations in more locations
+\fB\-Xnojline\fR 
+Do not use JLine for editing.
 .TP
-\fB\-Xplugin:\fR <\fIfile\fR> 
+\fB\-Xplugin:\fR<\fIfile\fR> 
 Load a plugin from a file
 .TP
-\fB\-Xplugin-disable:\fR <\fIplugin\fR> 
+\fB\-Xplugin-disable:\fR<\fIplugin\fR> 
 Disable a plugin
 .TP
 \fB\-Xplugin-list\fR 
 Print a synopsis of loaded plugins
 .TP
-\fB\-Xplugin-opt:\fR <\fIplugin:opt\fR> 
-Pass an option to a plugin
+\fB\-Xplugin-require:\fR<\fIplugin\fR> 
+Abort unless the given plugin(s) are available
 .TP
-\fB\-Xplugin-require:\fR <\fIplugin\fR> 
-Abort unless a plugin is available
+\fB\-Xpluginsdir\fR <\fIpath\fR> 
+Path to search compiler plugins.
 .TP
-\fB\-Xprint:\fR <\fIphases\fR> 
+\fB\-Xprint:\fR<\fIphases\fR> 
 Print out program after <\fIphases\fR> (see below).
 .TP
+\fB\-Xprint-icode\fR 
+Log internal icode to *.icode files.
+.TP
 \fB\-Xprint-pos\fR 
-Print tree positions (as offsets)
+Print tree positions, as offsets.
 .TP
 \fB\-Xprint-types\fR 
 Print tree types (debugging option).
@@ -189,11 +263,14 @@ Display a prompt after each error (debugging option).
 \fB\-Xresident\fR 
 Compiler stays resident, files to compile are read from standard input.
 .TP
+\fB\-Xscript\fR <\fIobject\fR> 
+Treat the source file as a script and wrap it in a main method.
+.TP
 \fB\-Xshow-class\fR <\fIclass\fR> 
-Show class info.
+Show internal representation of class.
 .TP
 \fB\-Xshow-object\fR <\fIobject\fR> 
-Show object info.
+Show internal representation of object.
 .TP
 \fB\-Xshow-phases\fR 
 Print a synopsis of compiler phases.
@@ -201,8 +278,14 @@ Print a synopsis of compiler phases.
 \fB\-Xsource-reader\fR <\fIclassname\fR> 
 Specify a custom method for reading source files.
 .TP
-\fB\-Xscript\fR <\fIobject\fR> 
-Compile as a script, wrapping the code into object.main().
+\fB\-Xsourcedir\fR <\fIpath\fR> 
+(Requires -target:msil) Mirror source folder structure in output directory..
+.TP
+\fB\-Xverify\fR 
+Verify generic signatures in generated bytecode.
+.TP
+\fB\-Y\fR 
+Print a synopsis of private options.
 .\"
 .\" ############################## Compilation Phases ###############################
 .\"
@@ -325,7 +408,7 @@ Written by Martin Odersky and other members of the Scala team.
 .\"
 .SH "REPORTING BUGS"
 .PP
-Report bugs to http://lampsvn.epfl.ch/trac/scala.
+Report bugs to https://issues.scala-lang.org/.
 .\"
 .\" ############################## COPYRIGHT ###############################
 .\"
@@ -337,4 +420,4 @@ This is open-source software, available to you under a BSD-like license. See acc
 .\"
 .SH "SEE ALSO"
 .PP
-\fBfsc\fR(1), \fBsbaz\fR(1), \fBscala\fR(1), \fBscaladoc\fR(1), \fBscalap\fR(1)
+\fBfsc\fR(1), \fBscala\fR(1), \fBscaladoc\fR(1), \fBscalap\fR(1)
